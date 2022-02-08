@@ -1,0 +1,603 @@
+{
+	"info": {
+		"_postman_id": "b703e0c7-f083-4dcc-839c-91c8a2cc5dc6",
+		"name": "Query Service Orders",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Authentication",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "Andreas@1234",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "andreas@finch.com",
+							"type": "string"
+						},
+						{
+							"key": "saveHelperData",
+							"value": true,
+							"type": "boolean"
+						},
+						{
+							"key": "showPassword",
+							"value": false,
+							"type": "boolean"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"username\" : \"andreas@finch.com\",\n\t\"password\":\"Andreas@1234\"\n}"
+				},
+				"url": {
+					"raw": "{{authenticationURL}}",
+					"host": [
+						"{{authenticationURL}}"
+					],
+					"query": [
+						{
+							"key": "",
+							"value": "",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Status Completed & Types Regular",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"const jsonData=pm.response.json()\r",
+							"\r",
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Validate Service Company ID\",function() {\r",
+							"\r",
+							"    pm.expect(jsonData.data[0].serviceCompany.id).to.eql(\"9d85be2d-ceb9-4b19-a350-9f512b4b57e4\");\r",
+							"})\r",
+							"\r",
+							"pm.test(\"Validate Service Company Name\",function(){\r",
+							"\r",
+							"    pm.expect(jsonData.data[0].serviceCompany.name).to.eql(\"Maintenance Experts GmbH\");\r",
+							"})\r",
+							"\r",
+							"pm.test(\"Validate Service Company State\",function(){\r",
+							"    pm.expect(jsonData.data[0].serviceCompany.meta.state).to.eql(\"ACTIVE\");\r",
+							"})\r",
+							"\r",
+							"pm.test(\" Validate Elevator ID\",function(){\r",
+							"\r",
+							"    pm.expect(jsonData.data[0].elevator.id).to.eql(\"b363854e-ace1-4528-a3ac-b5b379c8b780\");\r",
+							"})\r",
+							"\r",
+							"pm.test(\" Validate Elevator Number\",function(){\r",
+							"\r",
+							"    pm.expect(jsonData.data[0].elevator.number).to.eql(\"84\");\r",
+							"})\r",
+							"\r",
+							"pm.test(\" Validate Elevator Model\",function(){\r",
+							"\r",
+							"    pm.expect(jsonData.data[0].elevator.model).to.eql(\"Vestner\");\r",
+							"})\r",
+							"\r",
+							"pm.test(\" Validate Elevator Category\",function(){\r",
+							"\r",
+							"    pm.expect(jsonData.data[0].elevator.category).to.eql(\"LOADING_RAMP\");\r",
+							"})\r",
+							"\r",
+							"pm.test(\" Validate Address ID\",function(){\r",
+							"\r",
+							"    pm.expect(jsonData.data[0].elevator.address.id).to.eql(\"48795dfd-b8fa-488e-8ba9-fdb49ad92910\");\r",
+							"})\r",
+							"\r",
+							"pm.test(\" Validate Name\",function(){\r",
+							"\r",
+							"    pm.expect(jsonData.data[0].elevator.address.fullName).to.eql(\"Klopstockstraße 29, 10557 Berlin, Germany\");\r",
+							"})\r",
+							"\r",
+							"pm.test(\" Validate Property Owner ID\",function(){\r",
+							"\r",
+							"    pm.expect(jsonData.data[0].elevator.propertyOwner.id).to.eql(\"1a20acaf-fb75-49bc-a3de-a9665f3e0799\");\r",
+							"})\r",
+							"\r",
+							"pm.test(\" Validate Property Owner Name\",function(){\r",
+							"\r",
+							"    pm.expect(jsonData.data[0].elevator.propertyOwner.name).to.eql(\"Amazon\");\r",
+							"})\r",
+							"\r",
+							"pm.test(\" Validate Service Description\",function(){\r",
+							"\r",
+							"    pm.expect(jsonData.data[0].description).to.eql(\"Regular Maintenance\");\r",
+							"})\r",
+							"\r",
+							"pm.test(\" Validate Service Type\",function(){\r",
+							"\r",
+							"    pm.expect(jsonData.data[0].type).to.eql(\"REGULAR\");\r",
+							"})\r",
+							"\r",
+							"pm.test(\" Validate Service Status\",function(){\r",
+							"\r",
+							"    pm.expect(jsonData.data[0].status).to.eql(\"COMPLETED\");\r",
+							"})\r",
+							"\r",
+							"\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "e8905ea52b74498889402dff771ec113",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Token",
+						"value": "d31e78bcb5b84f9eac260e310495f8ae",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{baseURL}}?end={{end}}&order={{order}}&orderBy={{orderBy}}&pageIndex={{pageIndex}}&pageSize={{pageSIZE}}&query={{query}}&serviceCompanyId={{companyID}}&start={{start}}&status={{completeStatus}}&types={{typeRegular}}",
+					"host": [
+						"{{baseURL}}"
+					],
+					"query": [
+						{
+							"key": "end",
+							"value": "{{end}}"
+						},
+						{
+							"key": "order",
+							"value": "{{order}}"
+						},
+						{
+							"key": "orderBy",
+							"value": "{{orderBy}}"
+						},
+						{
+							"key": "pageIndex",
+							"value": "{{pageIndex}}"
+						},
+						{
+							"key": "pageSize",
+							"value": "{{pageSIZE}}"
+						},
+						{
+							"key": "query",
+							"value": "{{query}}"
+						},
+						{
+							"key": "serviceCompanyId",
+							"value": "{{companyID}}"
+						},
+						{
+							"key": "start",
+							"value": "{{start}}"
+						},
+						{
+							"key": "status",
+							"value": "{{completeStatus}}"
+						},
+						{
+							"key": "types",
+							"value": "{{typeRegular}}"
+						},
+						{
+							"key": "elevatorIds",
+							"value": "9d85be2d-ceb9-4b19-a350-9f512b4b57e4",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Status Ready To Schedule & Types Emergency",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"const jsonData=pm.response.json()\r",
+							"\r",
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Validate Service Company ID\",function() {\r",
+							"\r",
+							"    pm.expect(jsonData.data[0].serviceCompany.id).to.eql(\"9d85be2d-ceb9-4b19-a350-9f512b4b57e4\");\r",
+							"})\r",
+							"\r",
+							"pm.test(\"Validate Service Company Name\",function(){\r",
+							"\r",
+							"    pm.expect(jsonData.data[0].serviceCompany.name).to.eql(\"Maintenance Experts GmbH\");\r",
+							"})\r",
+							"\r",
+							"pm.test(\"Validate Service Company State\",function(){\r",
+							"    pm.expect(jsonData.data[0].serviceCompany.meta.state).to.eql(\"ACTIVE\");\r",
+							"})\r",
+							"\r",
+							"pm.test(\" Validate Elevator ID\",function(){\r",
+							"\r",
+							"    pm.expect(jsonData.data[0].elevator.id).to.eql(\"ad29f73c-bfbe-40cb-93a9-b40be24a4e71\");\r",
+							"})\r",
+							"\r",
+							"pm.test(\" Validate Elevator Number\",function(){\r",
+							"\r",
+							"    pm.expect(jsonData.data[0].elevator.number).to.eql(\"267\");\r",
+							"})\r",
+							"\r",
+							"pm.test(\" Validate Elevator Model\",function(){\r",
+							"\r",
+							"    pm.expect(jsonData.data[0].elevator.model).to.eql(\"Johnsen\");\r",
+							"})\r",
+							"\r",
+							"pm.test(\" Validate Elevator Category\",function(){\r",
+							"\r",
+							"    pm.expect(jsonData.data[0].elevator.category).to.eql(\"GARAGE_DOOR\");\r",
+							"})\r",
+							"\r",
+							"pm.test(\" Validate Address ID\",function(){\r",
+							"\r",
+							"    pm.expect(jsonData.data[0].elevator.address.id).to.eql(\"a9bfee85-e4bc-4834-9fc2-d0928ececb86\");\r",
+							"})\r",
+							"\r",
+							"pm.test(\" Validate Name\",function(){\r",
+							"\r",
+							"    pm.expect(jsonData.data[0].elevator.address.fullName).to.eql(\"Grüntaler Str. 30, 13357 Berlin, Germany\");\r",
+							"})\r",
+							"\r",
+							"pm.test(\" Validate Property Owner ID\",function(){\r",
+							"\r",
+							"    pm.expect(jsonData.data[0].elevator.propertyOwner.id).to.eql(\"7a1ea247-d9f7-44e7-9858-7a0430e81e1c\");\r",
+							"})\r",
+							"\r",
+							"pm.test(\" Validate Property Owner Name\",function(){\r",
+							"\r",
+							"    pm.expect(jsonData.data[0].elevator.propertyOwner.name).to.eql(\"3B Dienstleistung Deutschland\");\r",
+							"})\r",
+							"\r",
+							"pm.test(\" Validate Contract ID\",function(){\r",
+							"\r",
+							"    pm.expect(jsonData.data[0].contract.id).to.eql(\"ab24a87a-7138-40ce-b18f-eea01b29ef5e\");\r",
+							"})\r",
+							"\r",
+							"pm.test(\" Validate Contract Number \",function(){\r",
+							"\r",
+							"    pm.expect(jsonData.data[0].contract.number).to.eql(\"CNT000328\");\r",
+							"})\r",
+							"\r",
+							"pm.test(\" Validate Contract Type\",function(){\r",
+							"\r",
+							"    pm.expect(jsonData.data[0].contract.type).to.eql(\"BASIC\");\r",
+							"})\r",
+							"\r",
+							"pm.test(\" Validate Order Description\",function(){\r",
+							"\r",
+							"    pm.expect(jsonData.data[0].description).to.eql(\"emergency\");\r",
+							"})\r",
+							"\r",
+							"pm.test(\" Validate Order Type\",function(){\r",
+							"\r",
+							"    pm.expect(jsonData.data[0].type).to.eql(\"EMERGENCY\");\r",
+							"})\r",
+							"\r",
+							"pm.test(\" Validate Order Status\",function(){\r",
+							"\r",
+							"    pm.expect(jsonData.data[0].status).to.eql(\"READY_TO_SCHEDULE\");\r",
+							"})\r",
+							"\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "e8905ea52b74498889402dff771ec113",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Token",
+						"value": "d31e78bcb5b84f9eac260e310495f8ae",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{baseURL}}?end={{end}}&order={{order}}&orderBy={{orderBy}}&pageIndex={{pageIndex}}&pageSize={{pageSIZE}}&query={{query}}&serviceCompanyId={{companyID}}&start={{start}}&status={{readyToScheduleStatus}}&types={{typeEmergency}}",
+					"host": [
+						"{{baseURL}}"
+					],
+					"query": [
+						{
+							"key": "end",
+							"value": "{{end}}"
+						},
+						{
+							"key": "order",
+							"value": "{{order}}"
+						},
+						{
+							"key": "orderBy",
+							"value": "{{orderBy}}"
+						},
+						{
+							"key": "pageIndex",
+							"value": "{{pageIndex}}"
+						},
+						{
+							"key": "pageSize",
+							"value": "{{pageSIZE}}"
+						},
+						{
+							"key": "query",
+							"value": "{{query}}"
+						},
+						{
+							"key": "serviceCompanyId",
+							"value": "{{companyID}}"
+						},
+						{
+							"key": "start",
+							"value": "{{start}}"
+						},
+						{
+							"key": "status",
+							"value": "{{readyToScheduleStatus}}"
+						},
+						{
+							"key": "types",
+							"value": "{{typeEmergency}}"
+						},
+						{
+							"key": "elevatorIds",
+							"value": "9d85be2d-ceb9-4b19-a350-9f512b4b57e4",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Status SCHEDULED & Types Regular",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"const jsonData=pm.response.json()\r",
+							"\r",
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Validate Service Company ID\",function() {\r",
+							"\r",
+							"    pm.expect(jsonData.data[0].serviceCompany.id).to.eql(\"9d85be2d-ceb9-4b19-a350-9f512b4b57e4\");\r",
+							"})\r",
+							"\r",
+							"pm.test(\"Validate Service Company Name\",function(){\r",
+							"\r",
+							"    pm.expect(jsonData.data[0].serviceCompany.name).to.eql(\"Maintenance Experts GmbH\");\r",
+							"})\r",
+							"\r",
+							"pm.test(\"Validate Service Company State\",function(){\r",
+							"    pm.expect(jsonData.data[0].serviceCompany.meta.state).to.eql(\"ACTIVE\");\r",
+							"})\r",
+							"\r",
+							"pm.test(\" Validate Elevator ID\",function(){\r",
+							"\r",
+							"    pm.expect(jsonData.data[0].elevator.id).to.eql(\"ee710714-99a5-4692-8bca-ca4ec5f99b35\");\r",
+							"})\r",
+							"\r",
+							"pm.test(\" Validate Elevator Number\",function(){\r",
+							"\r",
+							"    pm.expect(jsonData.data[0].elevator.number).to.eql(\"2\");\r",
+							"})\r",
+							"\r",
+							"pm.test(\" Validate Elevator Model\",function(){\r",
+							"\r",
+							"    pm.expect(jsonData.data[0].elevator.model).to.eql(\"Orona\");\r",
+							"})\r",
+							"\r",
+							"pm.test(\" Validate Elevator Category\",function(){\r",
+							"\r",
+							"    pm.expect(jsonData.data[0].elevator.category).to.eql(\"FACADE_ACCESS_SYSTEM\");\r",
+							"})\r",
+							"\r",
+							"pm.test(\" Validate Address ID\",function(){\r",
+							"\r",
+							"    pm.expect(jsonData.data[0].elevator.address.id).to.eql(\"21b85fb9-a00d-4087-aa75-d41c21398f58\");\r",
+							"})\r",
+							"\r",
+							"pm.test(\" Validate Name\",function(){\r",
+							"\r",
+							"    pm.expect(jsonData.data[0].elevator.address.fullName).to.eql(\"An der Kolonnade 3, 10117 Berlin, Germany\");\r",
+							"})\r",
+							"\r",
+							"pm.test(\" Validate Property Owner ID\",function(){\r",
+							"\r",
+							"    pm.expect(jsonData.data[0].elevator.propertyOwner.id).to.eql(\"73443ae4-3276-4a1e-838b-aa06b7e5b68f\");\r",
+							"})\r",
+							"\r",
+							"pm.test(\" Validate Property Owner Name\",function(){\r",
+							"\r",
+							"    pm.expect(jsonData.data[0].elevator.propertyOwner.name).to.eql(\"Vattenfall\");\r",
+							"})\r",
+							"\r",
+							"pm.test(\" Validate Contract ID\",function(){\r",
+							"\r",
+							"    pm.expect(jsonData.data[0].contract.id).to.eql(\"64be292e-350d-4d5d-bfe7-40a71e05c402\");\r",
+							"})\r",
+							"\r",
+							"pm.test(\" Validate Contract Number \",function(){\r",
+							"\r",
+							"    pm.expect(jsonData.data[0].contract.number).to.eql(\"CNT000017\");\r",
+							"})\r",
+							"\r",
+							"pm.test(\" Validate Contract Type\",function(){\r",
+							"\r",
+							"    pm.expect(jsonData.data[0].contract.type).to.eql(\"BASIC\");\r",
+							"})\r",
+							"\r",
+							"pm.test(\" Validate Order Description\",function(){\r",
+							"\r",
+							"    pm.expect(jsonData.data[0].description).to.eql(\"Regular Maintenance\");\r",
+							"})\r",
+							"\r",
+							"pm.test(\" Validate Order Type\",function(){\r",
+							"\r",
+							"    pm.expect(jsonData.data[0].type).to.eql(\"REGULAR\");\r",
+							"})\r",
+							"\r",
+							"pm.test(\" Validate Order Status\",function(){\r",
+							"\r",
+							"    pm.expect(jsonData.data[0].status).to.eql(\"SCHEDULED\");\r",
+							"})\r",
+							"\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "e8905ea52b74498889402dff771ec113",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Token",
+						"value": "d31e78bcb5b84f9eac260e310495f8ae",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{baseURL}}?end={{end}}&order={{order}}&orderBy={{orderBy}}&pageIndex={{pageIndex}}&pageSize={{pageSIZE}}&query={{query}}&serviceCompanyId={{companyID}}&start={{start}}&status={{statusScheduled}}&types={{typeRegular}}",
+					"host": [
+						"{{baseURL}}"
+					],
+					"query": [
+						{
+							"key": "end",
+							"value": "{{end}}"
+						},
+						{
+							"key": "order",
+							"value": "{{order}}"
+						},
+						{
+							"key": "orderBy",
+							"value": "{{orderBy}}"
+						},
+						{
+							"key": "pageIndex",
+							"value": "{{pageIndex}}"
+						},
+						{
+							"key": "pageSize",
+							"value": "{{pageSIZE}}"
+						},
+						{
+							"key": "query",
+							"value": "{{query}}"
+						},
+						{
+							"key": "serviceCompanyId",
+							"value": "{{companyID}}"
+						},
+						{
+							"key": "start",
+							"value": "{{start}}"
+						},
+						{
+							"key": "status",
+							"value": "{{statusScheduled}}"
+						},
+						{
+							"key": "types",
+							"value": "{{typeRegular}}"
+						},
+						{
+							"key": "elevatorIds",
+							"value": "9d85be2d-ceb9-4b19-a350-9f512b4b57e4",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
